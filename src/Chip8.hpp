@@ -1,5 +1,8 @@
 #include <array>
 #include <iostream>
+#include <fstream>
+
+#include "Screen.hpp"
 
 class Chip8
 {
@@ -7,14 +10,18 @@ class Chip8
         Chip8() {}
 
         void reset();
+        bool load(const std::string&);
+        void run();
 
     private:
-        int pc; // program counter
-        int sp; // stack pointer
-        std::array<int, 4096> memory;
-        std::array<int, 16> stack;
-        std::array<int, 16> vReg; // "V" registers
-        int iReg; // 'I' register
-        int delayTimer;
-        int soundTimer;
+        short pc; // program counter
+        short sp; // stack pointer
+        std::array<char, 4096> memory;
+        std::array<short, 16> stack;
+        std::array<char, 16> vReg; // "V" registers
+        char iReg; // 'I' register
+        char delayTimer;
+        char soundTimer;
+
+        void performOp(const short);
 };

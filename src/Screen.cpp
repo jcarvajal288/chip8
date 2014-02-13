@@ -23,7 +23,7 @@ void Screen::initWindow(int argc, char** argv) const
     glutSwapBuffers();
 }
 
-void drawPixel(const int x, const int y) const
+void Screen::drawPixel(const int x, const int y) const
 {
 
 }
