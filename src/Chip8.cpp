@@ -119,21 +119,25 @@ void Chip8::performOp(const short opcode)
     }
 }
 
-int main(int argc, char** argv)
+void start()
 {
     Chip8 chip8;
-    Screen screen;
     chip8.reset();
     bool loadSuccessful = chip8.load("./games/MAZE");
     if(!loadSuccessful)
     {
         cout << "Load Failed.  Aborting." << endl;
-        return false;
+        return;
     }
 
     chip8.run();
 
-    screen.initWindow(argc, argv);
+    Renderer::display();
+}
 
-    return true;
+int main(int argc, char **argv)
+{
+    Renderer::init(argc, argv);
+    glutDisplayFunc(start);
+    glutMainLoop();
 }

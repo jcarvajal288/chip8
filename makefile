@@ -1,6 +1,6 @@
 CC = clang++
 CFLAGS = -Wall -std=c++11
-LFLAGS = -lglut
+LFLAGS = -lglut -lGLU
 SRCDIR = ./src
 OBJDIR = ./obj
 
@@ -9,7 +9,7 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 
 OBJ = \
 	$(OBJDIR)/Chip8.o \
-	$(OBJDIR)/Screen.o
+	$(OBJDIR)/Render.o
 
 
 all: chip8

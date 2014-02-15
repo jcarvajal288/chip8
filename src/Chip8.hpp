@@ -1,8 +1,9 @@
 #include <array>
 #include <iostream>
 #include <fstream>
+#include <GL/freeglut.h>
 
-#include "Screen.hpp"
+#include "Render.hpp"
 
 class Chip8
 {
