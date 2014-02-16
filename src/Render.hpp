@@ -6,7 +6,7 @@
 namespace Renderer
 {
     void drawPixel(const int, const int);
-    void display();
+    void clearScreen();
     void init(int, char**);
 }
 

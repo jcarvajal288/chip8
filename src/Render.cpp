@@ -15,11 +15,9 @@ namespace Renderer
         glEnd();
     }
 
-    void display()
+    void clearScreen()
     {
         glClear(GL_COLOR_BUFFER_BIT);
-        drawPixel(0,0);
-        drawPixel(63,31);
         glFlush();
     }
 
