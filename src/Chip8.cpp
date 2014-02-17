@@ -13,6 +13,8 @@ void Chip8::reset()
     iReg = 0;
     delayTimer = 0;
     soundTimer = 0;
+
+    loadBuiltinSprites();
 }
 
 bool Chip8::load(const string& program)
@@ -60,6 +62,38 @@ void Chip8::run()
         pc += 2; 
     }
     while(opcode != 0);
+}
+
+// loads the hex character sprites into chip8 memory
+void Chip8::loadBuiltinSprites()
+{
+    int addr = 0x0;
+    loadSprite(0xF0909090F0, addr); // 0
+    loadSprite(0x2060202070, addr); // 1
+    loadSprite(0xF010F080F0, addr); // 2
+    loadSprite(0xF010F010F0, addr); // 3
+    loadSprite(0x9090F01010, addr); // 4
+    loadSprite(0xF080F010F0, addr); // 5
+    loadSprite(0xF080F090F0, addr); // 6
+    loadSprite(0xF010204040, addr); // 7
+    loadSprite(0xF090F090F0, addr); // 8
+    loadSprite(0xF090F010F0, addr); // 9
+    loadSprite(0xF090F09090, addr); // A
+    loadSprite(0xE090E090E0, addr); // B
+    loadSprite(0xF0808080F0, addr); // C
+    loadSprite(0xE0909090E0, addr); // D
+    loadSprite(0xF080F080F0, addr); // E
+    loadSprite(0xF080F08080, addr); // F
+}
+
+// loads the given sprite (represented as an integer) into memory
+// at the given memory address. Sprites are assumed to be five bytes long.
+void Chip8::loadSprite(const long long sprite, int& addr)
+{
+    for(int i=5; i>0; --i)
+    {
+        memory.at(addr++) = (sprite >> static_cast<int>(pow(2, i))) & 0xFF;
+    }
 }
 
 void Chip8::performOp(const unsigned short opcode)

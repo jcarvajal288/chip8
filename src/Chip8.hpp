@@ -2,8 +2,9 @@
  * Chip8 reference at devernay.free.fr/hacks/chip8/C8TECH10.HTM
  */
 #include <array>
-#include <iostream>
+#include <cmath>
 #include <fstream>
+#include <iostream>
 #include <stdlib.h>
 #include <GL/freeglut.h>
 
@@ -27,6 +28,9 @@ class Chip8
         char iReg; // 'I' register
         char delayTimer;
         char soundTimer;
+
+        void loadBuiltinSprites();
+        void loadSprite(const long long, int&);
 
         void performOp(const unsigned short);
         void handle_0_codes(const unsigned short);
