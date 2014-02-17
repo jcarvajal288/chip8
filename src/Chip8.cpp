@@ -101,71 +101,72 @@ void Chip8::performOp(const unsigned short opcode)
     switch(opcode & 0xF000)
     {
         case 0x0000:
-            cout << "\tCLS, RET, or SYS" << endl;
+            cout << hex << opcode << endl;
             handle_0_codes(opcode);
             break;
         case 0x1000:
-            cout << "\tJP" << endl;
+            cout << hex << opcode << endl;
             handle_1_codes(opcode);
             break;
         case 0x2000:
-            cout << "\tCALL" << endl;
+            cout << hex << opcode << endl;
             handle_2_codes(opcode);
             break;
         case 0x3000:
-            cout << "\tSE" << endl;
+            cout << hex << opcode << endl;
             handle_3_codes(opcode);
             break;
         case 0x4000:
-            cout << "\tSNE" << endl;
+            cout << hex << opcode << endl;
             handle_4_codes(opcode);
             break;
         case 0x5000:
-            cout << "\tSE" << endl;
+            cout << hex << opcode << endl;
             handle_5_codes(opcode);
             break;
         case 0x6000:
-            cout << "\tLD" << endl;
+            cout << hex << opcode << endl;
             handle_6_codes(opcode);
             break;
         case 0x7000:
-            cout << "\tADD" << endl;
+            cout << hex << opcode << endl;
             handle_7_codes(opcode);
             break;
         case 0x8000:
-            cout << "\tLOGIC" << endl;
+            cout << hex << opcode << endl;
             handle_8_codes(opcode);
             break;
         case 0x9000:
-            cout << "\tSNE" << endl;
+            cout << hex << opcode << endl;
             handle_9_codes(opcode);
             break;
         case 0xA000:
-            cout << "\tLD I" << endl;
+            cout << hex << opcode << endl;
             handle_A_codes(opcode);
             break;
         case 0xB000:
-            cout << "\tJP v0" << endl;
+            cout << hex << opcode << endl;
             handle_B_codes(opcode);
             break;
         case 0xC000:
-            cout << "\tRND Vx" << endl;
+            cout << hex << opcode << endl;
             handle_C_codes(opcode);
             break;
         case 0xD000:
-            cout << "\tDRW" << endl;
+            cout << hex << opcode << endl;
             handle_D_codes(opcode);
             break;
         case 0xE000:
-            cout << "\tSKP, SKNP" << endl;
+            cout << hex << opcode << endl;
             handle_E_codes(opcode);
             break;
         case 0xF000:
-            cout << "\tLD or ADD" << endl;
+            cout << hex << opcode << endl;
             handle_F_codes(opcode);
             break;
         default:
-            cout << "Invalid opcode!" << endl;
+            cout << "Invalid opcode: " << hex << opcode << endl;
+            exit(EXIT_FAILURE);
     }
 }
 
@@ -182,7 +183,8 @@ void Chip8::handle_0_codes(const unsigned short opcode)
             pc = stack.at(sp--);
             break;
         default:
-            cerr << "Invalid 0xNNNN opcode!" << endl;
+            cerr << "Invalid 0x0NNN opcode: " << hex << opcode << endl;
+            exit(EXIT_FAILURE);
     }
 }
 
@@ -323,7 +325,8 @@ void Chip8::handle_8_codes(const unsigned short opcode)
             vReg.at(x) <<= 1;
             break;
         default:
-            cerr << "Invalid 0x8 opcode!" << endl;
+            cerr << "Invalid 0x8 opcode: " << hex << opcode << endl;
+            exit(EXIT_FAILURE);
     }
 }
 
