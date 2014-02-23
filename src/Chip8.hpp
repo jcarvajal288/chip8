@@ -6,7 +6,6 @@
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
-#include <GL/freeglut.h>
 
 #include "Render.hpp"
 
@@ -20,14 +19,14 @@ class Chip8
         void run();
 
     private:
-        short pc; // program counter
-        short sp; // stack pointer
-        std::array<char, 4096> memory;
-        std::array<short, 16> stack;
-        std::array<char, 16> vReg; // "V" registers
-        char iReg; // 'I' register
-        char delayTimer;
-        char soundTimer;
+        unsigned short pc; // program counter
+        unsigned short sp; // stack pointer
+        std::array<unsigned char, 4096> memory;
+        std::array<unsigned short, 16> stack;
+        std::array<unsigned char, 16> vReg; // "V" registers
+        unsigned char iReg; // 'I' register
+        unsigned char delayTimer;
+        unsigned char soundTimer;
 
         void loadBuiltinSprites();
         void loadSprite(const long long, int&);

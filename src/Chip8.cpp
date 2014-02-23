@@ -32,7 +32,7 @@ bool Chip8::load(const string& program)
     int currentAddress = startAddress;
     while(fileInput.good())
     {
-        char b = fileInput.get();
+        unsigned char b = fileInput.get();
         memory.at(currentAddress++) = b;
         if(currentAddress >= memory.size())
         {
@@ -101,67 +101,51 @@ void Chip8::performOp(const unsigned short opcode)
     switch(opcode & 0xF000)
     {
         case 0x0000:
-            cout << hex << opcode << endl;
             handle_0_codes(opcode);
             break;
         case 0x1000:
-            cout << hex << opcode << endl;
             handle_1_codes(opcode);
             break;
         case 0x2000:
-            cout << hex << opcode << endl;
             handle_2_codes(opcode);
             break;
         case 0x3000:
-            cout << hex << opcode << endl;
             handle_3_codes(opcode);
             break;
         case 0x4000:
-            cout << hex << opcode << endl;
             handle_4_codes(opcode);
             break;
         case 0x5000:
-            cout << hex << opcode << endl;
             handle_5_codes(opcode);
             break;
         case 0x6000:
-            cout << hex << opcode << endl;
             handle_6_codes(opcode);
             break;
         case 0x7000:
-            cout << hex << opcode << endl;
             handle_7_codes(opcode);
             break;
         case 0x8000:
-            cout << hex << opcode << endl;
             handle_8_codes(opcode);
             break;
         case 0x9000:
-            cout << hex << opcode << endl;
             handle_9_codes(opcode);
             break;
         case 0xA000:
-            cout << hex << opcode << endl;
             handle_A_codes(opcode);
             break;
         case 0xB000:
-            cout << hex << opcode << endl;
             handle_B_codes(opcode);
             break;
         case 0xC000:
-            cout << hex << opcode << endl;
             handle_C_codes(opcode);
             break;
         case 0xD000:
-            cout << hex << opcode << endl;
             handle_D_codes(opcode);
             break;
         case 0xE000:
-            cout << hex << opcode << endl;
             handle_E_codes(opcode);
             break;
         case 0xF000:
-            cout << hex << opcode << endl;
             handle_F_codes(opcode);
             break;
         default:
@@ -397,28 +381,4 @@ void Chip8::handle_E_codes(const unsigned short opcode)
 void Chip8::handle_F_codes(const unsigned short opcode)
 {
 
-}
-
-
-
-void start()
-{
-    Chip8 chip8;
-    chip8.reset();
-    srand(time(NULL));
-    bool loadSuccessful = chip8.load("./games/MAZE");
-    if(!loadSuccessful)
-    {
-        cout << "Load Failed.  Aborting." << endl;
-        return;
-    }
-
-    chip8.run();
-}
-
-int main(int argc, char **argv)
-{
-    Renderer::init(argc, argv);
-    glutDisplayFunc(start);
-    glutMainLoop();
 }

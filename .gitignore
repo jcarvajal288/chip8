@@ -3,3 +3,8 @@
 *.o
 chip8
 obj
+debug
+test
+*.swo
+compileAndTest.sh
+test_debug
