@@ -203,3 +203,36 @@ TEST(Chip8Test, opcode_8xy1)
     chip8.performOp(0x8011);
     EXPECT_EQ(chip8.vReg.at(0), 0xFF) << "0xF | 0xF0 not performed correctly";
 }
+
+TEST(Chip8Test, opcode_8xy2)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    chip8.performOp(0x8012);
+    EXPECT_EQ(chip8.vReg.at(0), 0) << "0 & 0 not performed correctly";
+
+    chip8.vReg.at(1) = 1;
+    chip8.performOp(0x8012);
+    EXPECT_EQ(chip8.vReg.at(0), 0) << "0 & 1 not performed correctly";
+
+    chip8.vReg.at(0) = 1;
+    chip8.vReg.at(1) = 1;
+    chip8.performOp(0x8012);
+    EXPECT_EQ(chip8.vReg.at(0), 1) << "1 & 1 not performed correctly";
+
+    chip8.vReg.at(0) = 0;
+    chip8.vReg.at(1) = 0xF;
+    chip8.performOp(0x8012);
+    EXPECT_EQ(chip8.vReg.at(0), 0x0) << "0 & 0xF not performed correctly";
+
+    chip8.vReg.at(1) = 0x5;
+    chip8.vReg.at(0) = 0xF;
+    chip8.performOp(0x8012);
+    EXPECT_EQ(chip8.vReg.at(0), 0x5) << "0x5 & 0xA not performed correctly";
+
+    chip8.vReg.at(1) = 0xF5;
+    chip8.vReg.at(0) = 0x5F;
+    chip8.performOp(0x8012);
+    EXPECT_EQ(chip8.vReg.at(0), 0x55) << "0xF5 & 0x5F not performed correctly";
+}
