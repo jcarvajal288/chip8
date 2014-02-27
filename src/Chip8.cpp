@@ -258,6 +258,7 @@ void Chip8::handle_8_codes(const unsigned short opcode)
     // all 0x8 opcodes use the middle two nibbles to store register IDs
     const unsigned char x = (opcode & 0x0F00) / 0x100;
     const unsigned char y = (opcode & 0x00F0) / 0x10;
+    int sum;
     switch(opcode & 0xF) // switch against the least significant nibble
     {
         case 0x0:
@@ -277,11 +278,14 @@ void Chip8::handle_8_codes(const unsigned short opcode)
             vReg.at(x) ^= vReg.at(y);
             break;
         case 0x4:
-            // 8xy4 - ADD Vx, Vy - Set Vx = Vx ADD Vy
-            vReg.at(x) += vReg.at(y);
+            // 8xy4 - ADD Vx, Vy - Set Vx = Vx ADD Vy, Set VF = carry
+            sum = vReg.at(x) + vReg.at(y);
+            vReg.at(0xF) = (sum > 255) ? 1 : 0;
+            vReg.at(x) = sum & 0xFF; 
             break;
         case 0x5:
-            // 8xy5 - SUB Vx, Vy - Set Vx = Vx SUB Vy
+            // 8xy5 - SUB Vx, Vy - Set Vx = Vx SUB Vy, VF = NOT borrow
+            vReg.at(0xF) = (vReg.at(x) > vReg.at(y)) ? 1 : 0;
             vReg.at(x) -= vReg.at(y);
             break;
         case 0x6:

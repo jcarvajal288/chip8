@@ -236,3 +236,78 @@ TEST(Chip8Test, opcode_8xy2)
     chip8.performOp(0x8012);
     EXPECT_EQ(chip8.vReg.at(0), 0x55) << "0xF5 & 0x5F not performed correctly";
 }
+
+TEST(Chip8Test, opcode_8xy3)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    chip8.performOp(0x8013);
+    EXPECT_EQ(chip8.vReg.at(0), 0) << "0 ^ 0 not performed correctly";
+
+    chip8.vReg.at(1) = 1;
+    chip8.performOp(0x8013);
+    EXPECT_EQ(chip8.vReg.at(0), 1) << "0 ^ 1 not performed correctly";
+
+    chip8.vReg.at(0) = 1;
+    chip8.vReg.at(1) = 1;
+    chip8.performOp(0x8013);
+    EXPECT_EQ(chip8.vReg.at(0), 0) << "1 ^ 1 not performed correctly";
+
+    chip8.vReg.at(0) = 0;
+    chip8.vReg.at(1) = 0xF;
+    chip8.performOp(0x8013);
+    EXPECT_EQ(chip8.vReg.at(0), 0xF) << "0 ^ 0xF not performed correctly";
+
+    chip8.vReg.at(1) = 0x5;
+    chip8.vReg.at(0) = 0xF;
+    chip8.performOp(0x8013);
+    EXPECT_EQ(chip8.vReg.at(0), 0xA) << "0x5 ^ 0xA not performed correctly";
+
+    chip8.vReg.at(1) = 0xF5;
+    chip8.vReg.at(0) = 0x5F;
+    chip8.performOp(0x8013);
+    EXPECT_EQ(chip8.vReg.at(0), 0xAA) << "0xF5 ^ 0x5F not performed correctly";
+}
+
+TEST(Chip8Test, opcode_8xy4)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    chip8.vReg.at(0) = 5;
+    chip8.vReg.at(1) = 2;
+    chip8.performOp(0x8014);
+    EXPECT_EQ(chip8.vReg.at(0), 7) << "wrong sum of 5 and 2";
+    EXPECT_EQ(chip8.vReg.at(0xF), 0) << "carry bit 1 after <255 addition";
+
+    chip8.vReg.at(3) = 3;
+    chip8.vReg.at(4) = 7;
+    chip8.performOp(0x8344);
+    EXPECT_EQ(chip8.vReg.at(3), 10) << "wrong sum of 3 and 7";
+    EXPECT_EQ(chip8.vReg.at(0xF), 0) << "carry bit 1 after <255 addition";
+
+    chip8.vReg.at(5) = 250;
+    chip8.vReg.at(7) = 250;
+    chip8.performOp(0x8574);
+    EXPECT_EQ(chip8.vReg.at(5), 0xF4) << "wrong sum of 250 and 250";
+    EXPECT_EQ(chip8.vReg.at(0xF), 1) << "carry bit 0 after >255 addition";
+}
+
+TEST(Chip8Test, opcode_8xy5)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    chip8.vReg.at(0) = 5;
+    chip8.vReg.at(1) = 2;
+    chip8.performOp(0x8015);
+    EXPECT_EQ(chip8.vReg.at(0), 3) << "wrong difference of 5 and 2";
+    EXPECT_EQ(chip8.vReg.at(0xF), 1) << "carry bit 0 after non-carry subtraction";
+
+    chip8.vReg.at(3) = 3;
+    chip8.vReg.at(4) = 7;
+    chip8.performOp(0x8345);
+    EXPECT_EQ(chip8.vReg.at(3), 0xFC) << "wrong difference of 3 and 7";
+    EXPECT_EQ(chip8.vReg.at(0xF), 0) << "carry bit 1 after carried subtraction";
+}
