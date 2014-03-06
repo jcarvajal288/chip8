@@ -5,10 +5,10 @@ TESTOBJDIR = ./testobj
 CFLAGS = -Wall -std=c++11 -I$(SRCDIR)
 CDEBUGFLAGS = $(CFLAGS) -g -O0
 GTESTDIR = /usr/gtest-1.7.0
-TESTDEBUGFLAGS = $(TESTFLAGS) $(CDEBUGFLAGS)
+TESTDEBUGFLAGS = $(TESTFLAGS) 
 CC = clang++
 LFLAGS = -lglut -lGLU
-TESTFLAGS = -I$(GTESTDIR) -I$(GTESTDIR)/include $(CFLAGS) -I$(SRCDIR)
+TESTFLAGS = -I$(GTESTDIR) -I$(GTESTDIR)/include 
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<
@@ -17,10 +17,10 @@ $(OBJDIR)/%.dbg.o : $(SRCDIR)/%.cpp
 	$(CC) $(CDEBUGFLAGS) -o $@ -c $<
 
 $(OBJDIR)/%.o : $(TESTDIR)/%.cpp
-	$(CC) $(TESTFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) $(TESTFLAGS) -o $@ -c $<
 
 $(OBJDIR)/%.dbg.o : $(TESTDIR)/%.cpp
-	$(CC) $(TESTDEBUGFLAGS) -o $@ -c $<
+	$(CC) $(CDEBUGFLAGS) $(TESTDEBUGFLAGS) -o $@ -c $<
 
 
 OBJ = \

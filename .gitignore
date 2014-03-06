@@ -8,3 +8,4 @@ test
 *.swo
 compileAndTest.sh
 test_debug
+.gradle

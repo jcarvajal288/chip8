@@ -311,3 +311,56 @@ TEST(Chip8Test, opcode_8xy5)
     EXPECT_EQ(chip8.vReg.at(3), 0xFC) << "wrong difference of 3 and 7";
     EXPECT_EQ(chip8.vReg.at(0xF), 0) << "carry bit 1 after carried subtraction";
 }
+
+TEST(Chip8Test, opcode_8xy6)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    chip8.vReg.at(0) = 0x0F;
+    chip8.vReg.at(1) = 0xF0;
+
+    chip8.performOp(0x8006);
+    EXPECT_EQ(chip8.vReg.at(0), 0x7) << "0xF shifted right is not 0x7";
+    EXPECT_EQ(chip8.vReg.at(0xF), 1) << "carry bit not 1 after borrowed shift right";
+
+    chip8.performOp(0x8106);
+    EXPECT_EQ(chip8.vReg.at(1), 0x78) << "0xF0 shifted right is not 0x78";
+    EXPECT_EQ(chip8.vReg.at(0xF), 0) << "carry bit 1 after non-borrowed shift right";
+}
+
+TEST(Chip8Test, opcode_8xy7)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    chip8.vReg.at(0) = 5;
+    chip8.vReg.at(1) = 2;
+    chip8.performOp(0x8017);
+    EXPECT_EQ(chip8.vReg.at(0), 0xFD) << "wrong difference of 2 and 5";
+    EXPECT_EQ(chip8.vReg.at(0xF), 0) << "carry bit 1 after carried subtraction";
+
+    chip8.vReg.at(3) = 3;
+    chip8.vReg.at(4) = 7;
+    chip8.performOp(0x8347);
+    EXPECT_EQ(chip8.vReg.at(3), 0x4) << "wrong difference of 7 and 3";
+    EXPECT_EQ(chip8.vReg.at(0xF), 1) << "carry bit 0 after non-carry subtraction";
+}
+
+TEST(Chip8Test, opcode_8xyE)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    chip8.vReg.at(0) = 0x0F;
+    chip8.vReg.at(1) = 0xF0;
+
+    chip8.performOp(0x800E);
+    EXPECT_EQ(chip8.vReg.at(0), 0x1E) << "0xF shifted left is not 0x1E";
+    EXPECT_EQ(chip8.vReg.at(0xF), 0) << "carry bit 1 after non-borrowed shift left";
+
+    chip8.performOp(0x810E);
+    EXPECT_EQ(chip8.vReg.at(1), 0xE0) << "0xF0 shifted left is not 0xE0";
+    EXPECT_EQ(chip8.vReg.at(0xF), 1) << "carry bit not 1 after borrowed shift left";
+}
+
