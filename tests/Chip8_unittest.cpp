@@ -364,3 +364,60 @@ TEST(Chip8Test, opcode_8xyE)
     EXPECT_EQ(chip8.vReg.at(0xF), 1) << "carry bit not 1 after borrowed shift left";
 }
 
+TEST(Chip8Test, opcode_9xy0)
+{
+
+    Chip8 chip8;
+    chip8.reset();
+
+    short initialPC = chip8.pc;
+    chip8.vReg.at(0) = 0x1;
+    chip8.vReg.at(1) = 0x1;
+    chip8.performOp(0x9010);
+    EXPECT_EQ(chip8.pc, initialPC) << "pc increased when registers were equal";
+
+    initialPC = chip8.pc;
+    chip8.vReg.at(0) = 0x1;
+    chip8.vReg.at(1) = 0x2;
+    chip8.performOp(0x9010);
+    EXPECT_EQ(chip8.pc, initialPC+2) << "pc not increased when registers were not equal";
+}
+
+TEST(Chip8Test, opcode_Annn)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    chip8.performOp(0xA045);
+    EXPECT_EQ(chip8.iReg, 0x45) << "I register not set correctly";
+
+    chip8.performOp(0xA123);
+    EXPECT_EQ(chip8.iReg, 0x23) << "I register not set correctly after overflow";
+}
+
+TEST(Chip8Test, opcode_Bnnn)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    char offset = 0x23;
+    chip8.vReg.at(0) = offset; 
+    chip8.performOp(0xB123);
+    EXPECT_EQ(chip8.pc, chip8.vReg.at(0) + offset) << "JP not performed correctly";
+}
+
+TEST(Chip8Test, opcode_Cxkk)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    for(int i=0; i<300; ++i)
+    {
+        chip8.performOp(0xC0FF);
+        EXPECT_GE(chip8.vReg.at(0), 0) << "random value is less than 0";
+        EXPECT_LE(chip8.vReg.at(0), 255) << "random value is greater than 255";
+
+        chip8.performOp(0xC000);
+        EXPECT_EQ(chip8.vReg.at(0), 0) << "random value anded with 0x00 is not 0";
+    }
+}
