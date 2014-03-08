@@ -618,6 +618,28 @@ TEST(Chip8Test, opcode_Dxyn_wrapHorizontal)
     EXPECT_EQ(chip8.screen.getRow(0, 4), 0xC0) << "Incorrect blitting at row (0,4)";
 }
 
+TEST(Chip8Test, opcode_Dxyn_wrapVertical)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    // test the built in '0' sprite
+    chip8.iReg = 0;
+    int x = 0, y = 29;
+    chip8.vReg.at(0) = x;
+    chip8.vReg.at(1) = y;
+    chip8.performOp(0x0D015);
+
+    // test the rows on the bottom of the screen
+    EXPECT_EQ(chip8.screen.getRow(0, 29), 0xF0) << "Incorrect blitting at row (0,29)";
+    EXPECT_EQ(chip8.screen.getRow(0, 30), 0x90) << "Incorrect blitting at row (0,30)";
+    EXPECT_EQ(chip8.screen.getRow(0, 31), 0x90) << "Incorrect blitting at row (0,31)";
+
+    // test the rows on the top of the screen
+    EXPECT_EQ(chip8.screen.getRow(0, 0), 0x90) << "Incorrect blitting at row (0,0)";
+    EXPECT_EQ(chip8.screen.getRow(0, 1), 0xF0) << "Incorrect blitting at row (0,1)";
+}
+
 
 TEST(Chip8Test, opcode_Fx07)
 {
