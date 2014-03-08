@@ -370,10 +370,13 @@ bool Chip8::handle_D_codes(const unsigned short opcode)
     // onto the existing screen. If this causes any pixels to be erased, VF is set to 1, 
     // otherwise it is set to 0.  If the sprite is positioned so part of it is outside
     // the coordinates of the display, it wraps around to the opposite side of the screen.
-    const unsigned char x = (opcode & 0x0F00) / 0x100;
-    const unsigned char y = (opcode & 0x00F0) / 0x10;
+    const unsigned char vx = (opcode & 0x0F00) / 0x100;
+    const unsigned char vy = (opcode & 0x00F0) / 0x10;
     const unsigned char numBytes = opcode & 0xF;
     unsigned char spriteRow;
+
+    int x = vReg.at(vx);
+    int y = vReg.at(vy);
 
     for(int i=0; i<numBytes; ++i)
     {

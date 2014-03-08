@@ -17,12 +17,17 @@ namespace Renderer
 
     bool Screen::at(const unsigned int x, const unsigned int y) const
     {
-        return pixelArray.at(y).test(x);
+        int _x = x % width();
+        int _y = y % height();
+        return pixelArray.at(_y).test(_x);
     }
 
     void Screen::set(const unsigned int x, const unsigned int y, const bool b)
     {
-        pixelArray.at(y).set(x, b);
+        // if the coordinates are off the screen, they wrap around to the other side.
+        int _x = x % width();
+        int _y = y % height();
+        pixelArray.at(_y).set(_x, b);
     }
 
     void Screen::setXOR(const unsigned int x, const unsigned int y, const bool b)
@@ -38,14 +43,14 @@ namespace Renderer
         // returns an integer representation of an 8 pixel long horizontal row
         // of the screen.  Sprites are all 8 pixels wide.
         int sum = 0;
-        sum += pixelArray.at(y).test(x) * 0x80;
-        sum += pixelArray.at(y).test(x+1) * 0x40;
-        sum += pixelArray.at(y).test(x+2) * 0x20;
-        sum += pixelArray.at(y).test(x+3) * 0x10;
-        sum += pixelArray.at(y).test(x+4) * 0x8;
-        sum += pixelArray.at(y).test(x+5) * 0x4;
-        sum += pixelArray.at(y).test(x+6) * 0x2;
-        sum += pixelArray.at(y).test(x+7) * 0x1;
+        sum += at(x, y) * 0x80;
+        sum += at(x+1, y) * 0x40;
+        sum += at(x+2, y) * 0x20;
+        sum += at(x+3, y) * 0x10;
+        sum += at(x+4, y) * 0x8;
+        sum += at(x+5, y) * 0x4;
+        sum += at(x+6, y) * 0x2;
+        sum += at(x+7, y) * 0x1;
         return sum;
     }
 

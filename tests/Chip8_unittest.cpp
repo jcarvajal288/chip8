@@ -575,7 +575,7 @@ TEST(Chip8Test, opcode_Cxkk)
     }
 }
 
-TEST(Chip8Test, opcode_Dxy0)
+TEST(Chip8Test, opcode_Dxyn_noWrap)
 {
     Chip8 chip8;
     chip8.reset();
@@ -589,6 +589,33 @@ TEST(Chip8Test, opcode_Dxy0)
     EXPECT_EQ(chip8.screen.getRow(0, 2), 0x90) << "Incorrect blitting at row (0,2)";
     EXPECT_EQ(chip8.screen.getRow(0, 3), 0x90) << "Incorrect blitting at row (0,3)";
     EXPECT_EQ(chip8.screen.getRow(0, 4), 0xF0) << "Incorrect blitting at row (0,4)";
+}
+
+TEST(Chip8Test, opcode_Dxyn_wrapHorizontal)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    // test the built in '0' sprite
+    chip8.iReg = 0;
+    int x = 62, y = 0;
+    chip8.vReg.at(0) = x;
+    chip8.vReg.at(1) = y;
+    chip8.performOp(0x0D015);
+
+    // test the row on the right side of the screen
+    EXPECT_EQ(chip8.screen.getRow(56, 0), 0x3) << "Incorrect blitting at row (56,0)";
+    EXPECT_EQ(chip8.screen.getRow(56, 1), 0x2) << "Incorrect blitting at row (56,1)";
+    EXPECT_EQ(chip8.screen.getRow(56, 2), 0x2) << "Incorrect blitting at row (56,2)";
+    EXPECT_EQ(chip8.screen.getRow(56, 3), 0x2) << "Incorrect blitting at row (56,3)";
+    EXPECT_EQ(chip8.screen.getRow(56, 4), 0x3) << "Incorrect blitting at row (56,4)";
+
+    // test the row on the left side of the screen
+    EXPECT_EQ(chip8.screen.getRow(0, 0), 0xC0) << "Incorrect blitting at row (0,0)";
+    EXPECT_EQ(chip8.screen.getRow(0, 1), 0x40) << "Incorrect blitting at row (0,1)";
+    EXPECT_EQ(chip8.screen.getRow(0, 2), 0x40) << "Incorrect blitting at row (0,2)";
+    EXPECT_EQ(chip8.screen.getRow(0, 3), 0x40) << "Incorrect blitting at row (0,3)";
+    EXPECT_EQ(chip8.screen.getRow(0, 4), 0xC0) << "Incorrect blitting at row (0,4)";
 }
 
 
