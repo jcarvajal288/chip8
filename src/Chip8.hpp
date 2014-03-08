@@ -2,7 +2,6 @@
  * Chip8 reference at devernay.free.fr/hacks/chip8/C8TECH10.HTM
  */
 #include <array>
-#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>

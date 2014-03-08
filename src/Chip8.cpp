@@ -91,9 +91,9 @@ void Chip8::loadBuiltinSprites()
 // at the given memory address. Sprites are assumed to be five bytes long.
 void Chip8::loadSprite(const long long sprite, int& addr)
 {
-    for(int i=5; i>0; --i)
+    for(int i=4; i>=0; --i)
     {
-        memory.at(addr++) = (sprite >> static_cast<int>(pow(2, i))) & 0xFF;
+        memory.at(addr++) = (sprite >> (8*i)) & 0xFF;
     }
 }
 
@@ -370,17 +370,17 @@ bool Chip8::handle_D_codes(const unsigned short opcode)
     // onto the existing screen. If this causes any pixels to be erased, VF is set to 1, 
     // otherwise it is set to 0.  If the sprite is positioned so part of it is outside
     // the coordinates of the display, it wraps around to the opposite side of the screen.
-/*
     const unsigned char x = (opcode & 0x0F00) / 0x100;
     const unsigned char y = (opcode & 0x00F0) / 0x10;
     const unsigned char numBytes = opcode & 0xF;
-    array<char, numBytes> sprite;
+    unsigned char spriteRow;
 
     for(int i=0; i<numBytes; ++i)
     {
-        sprite.at(i) = memory.at(iReg+i);
+        spriteRow = memory.at(iReg+i);
+        screen.setRow(x, y+i, spriteRow);
     }
-*/
+
     return true;
 }
 

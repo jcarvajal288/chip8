@@ -25,6 +25,13 @@ namespace Renderer
         pixelArray.at(y).set(x, b);
     }
 
+    void Screen::setXOR(const unsigned int x, const unsigned int y, const bool b)
+    {
+        // sets the given location to the XOR of the current pixel and the new pixel
+        bool val = at(x,y) ^ b;
+        set(x, y, val);
+    }
+
     int Screen::getRow(const unsigned int x, const unsigned int y) const
     {
         // used only for the unit tests
@@ -45,13 +52,14 @@ namespace Renderer
     void Screen::setRow(const unsigned int x, const unsigned int y, const unsigned char ch)
     {
         // sets an 8 pixel long horizontal row to the bitwise representation of the passed
-        // in byte.  Useful for blitting sprites, which are all 8 pixels wide.
+        // in byte.  Useful for blitting sprites, which are all 8 pixels wide.  This uses
+        // setXOR to fit with the requirements for opcode 6xyn.
         int val;
         for(int i=0; i<8; ++i)
         {
             val = ch & (0x1 << i);
             val >>= i;
-            set(x+(7-i),y, val);
+            setXOR(x+(7-i),y, val);
         }
     }
 

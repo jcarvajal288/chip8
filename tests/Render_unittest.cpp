@@ -63,4 +63,7 @@ TEST(RenderTest, SetRow)
 
     screen.setRow(0, 0, 0xF);
     EXPECT_EQ(screen.getRow(0,0), 0xF) << "Sprite row not set correctly";
+    
+    screen.setRow(0, 0, 0xFF);
+    EXPECT_EQ(screen.getRow(0,0), 0xF0) << "Sprite row does not XOR correctly";
 }

@@ -14,6 +14,7 @@ namespace Renderer
 
             bool at(const unsigned int, const unsigned int) const;
             void set(const unsigned int, const unsigned int, const bool);
+            void setXOR(const unsigned int, const unsigned int, const bool);
             int getRow(const unsigned int, const unsigned int) const;
             void setRow(const unsigned int, const unsigned int, const unsigned char);
             void clear();

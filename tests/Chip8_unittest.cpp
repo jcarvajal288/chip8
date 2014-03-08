@@ -35,6 +35,159 @@ TEST(Chip8Test, Reset)
     EXPECT_EQ(chip8.soundTimer, 0) << "Sound Timer not 0";
 }
 
+TEST(Chip8Test, HexSprites)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    int addr = 0;
+    bool success;
+
+    // check 0
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite '0' not loaded correctly.";
+
+    // check 1
+    success = true;
+    success = chip8.memory.at(addr++) == 0x20;
+    success = chip8.memory.at(addr++) == 0x60;
+    success = chip8.memory.at(addr++) == 0x20;
+    success = chip8.memory.at(addr++) == 0x20;
+    success = chip8.memory.at(addr++) == 0x70;
+    EXPECT_TRUE(success) << "Sprite '1' not loaded correctly.";
+
+    // check 2
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x10;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite '2' not loaded correctly.";
+
+    // check 3
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x10;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x10;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite '3' not loaded correctly.";
+    
+    // check 4
+    success = true;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x10;
+    success = chip8.memory.at(addr++) == 0x10;
+    EXPECT_TRUE(success) << "Sprite '4' not loaded correctly.";
+
+    // check 5
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x10;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite '5' not loaded correctly.";
+
+    // check 6
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite '6' not loaded correctly.";
+
+    // check 7
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x10;
+    success = chip8.memory.at(addr++) == 0x20;
+    success = chip8.memory.at(addr++) == 0x40;
+    success = chip8.memory.at(addr++) == 0x40;
+    EXPECT_TRUE(success) << "Sprite '7' not loaded correctly.";
+
+    // check 8
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite '8' not loaded correctly.";
+
+    // check 9
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x10;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite '9' not loaded correctly.";
+
+    // check A
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0x90;
+    EXPECT_TRUE(success) << "Sprite 'A' not loaded correctly.";
+
+    // check B
+    success = true;
+    success = chip8.memory.at(addr++) == 0xE0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xE0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xE0;
+    EXPECT_TRUE(success) << "Sprite 'B' not loaded correctly.";
+
+    // check C
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite 'C' not loaded correctly.";
+
+    // check D
+    success = true;
+    success = chip8.memory.at(addr++) == 0xE0;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0x90;
+    success = chip8.memory.at(addr++) == 0xE0;
+    EXPECT_TRUE(success) << "Sprite 'D' not loaded correctly.";
+
+    // check E
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0xF0;
+    EXPECT_TRUE(success) << "Sprite 'E' not loaded correctly.";
+
+    // check F
+    success = true;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0xF0;
+    success = chip8.memory.at(addr++) == 0x80;
+    success = chip8.memory.at(addr++) == 0x80;
+    EXPECT_TRUE(success) << "Sprite 'F' not loaded correctly.";
+}
+
 TEST(Chip8Test, LoadProgram)
 {
     const string testProgram = "./games/MAZE";
@@ -422,7 +575,6 @@ TEST(Chip8Test, opcode_Cxkk)
     }
 }
 
-/*
 TEST(Chip8Test, opcode_Dxy0)
 {
     Chip8 chip8;
@@ -438,7 +590,6 @@ TEST(Chip8Test, opcode_Dxy0)
     EXPECT_EQ(chip8.screen.getRow(0, 3), 0x90) << "Incorrect blitting at row (0,3)";
     EXPECT_EQ(chip8.screen.getRow(0, 4), 0xF0) << "Incorrect blitting at row (0,4)";
 }
-*/
 
 
 TEST(Chip8Test, opcode_Fx07)
