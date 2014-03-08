@@ -55,3 +55,12 @@ TEST(RenderTest, GetRow)
 
     EXPECT_EQ(screen.getRow(0,0), 0xF0) << "Sprite row not retrieved correctly";
 }
+
+TEST(RenderTest, SetRow)
+{
+    Screen screen;
+    screen.clear();
+
+    screen.setRow(0, 0, 0xF);
+    EXPECT_EQ(screen.getRow(0,0), 0xF) << "Sprite row not set correctly";
+}

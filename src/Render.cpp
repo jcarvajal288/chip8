@@ -42,6 +42,19 @@ namespace Renderer
         return sum;
     }
 
+    void Screen::setRow(const unsigned int x, const unsigned int y, const unsigned char ch)
+    {
+        // sets an 8 pixel long horizontal row to the bitwise representation of the passed
+        // in byte.  Useful for blitting sprites, which are all 8 pixels wide.
+        int val;
+        for(int i=0; i<8; ++i)
+        {
+            val = ch & (0x1 << i);
+            val >>= i;
+            set(x+(7-i),y, val);
+        }
+    }
+
     void drawPixel(const int x, const int flipped_y)
     {
         // openGL puts the origin at the lower left, so we need to switch

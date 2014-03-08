@@ -432,11 +432,11 @@ TEST(Chip8Test, opcode_Dxy0)
     chip8.iReg = 0;
     chip8.performOp(0x0D005);
     // test each row of the sprite (each row is a byte long)
-    EXPECT_EQ(chip8.screen.getRow(0, 0), 0xF0) << "Incorrect blitting at row (0,0)"
-    EXPECT_EQ(chip8.screen.getRow(0, 1), 0x90) << "Incorrect blitting at row (0,1)"
-    EXPECT_EQ(chip8.screen.getRow(0, 2), 0x90) << "Incorrect blitting at row (0,2)"
-    EXPECT_EQ(chip8.screen.getRow(0, 3), 0x90) << "Incorrect blitting at row (0,3)"
-    EXPECT_EQ(chip8.screen.getRow(0, 4), 0xF0) << "Incorrect blitting at row (0,4)"
+    EXPECT_EQ(chip8.screen.getRow(0, 0), 0xF0) << "Incorrect blitting at row (0,0)";
+    EXPECT_EQ(chip8.screen.getRow(0, 1), 0x90) << "Incorrect blitting at row (0,1)";
+    EXPECT_EQ(chip8.screen.getRow(0, 2), 0x90) << "Incorrect blitting at row (0,2)";
+    EXPECT_EQ(chip8.screen.getRow(0, 3), 0x90) << "Incorrect blitting at row (0,3)";
+    EXPECT_EQ(chip8.screen.getRow(0, 4), 0xF0) << "Incorrect blitting at row (0,4)";
 }
 */
 

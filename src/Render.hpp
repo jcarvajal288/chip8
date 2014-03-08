@@ -15,6 +15,7 @@ namespace Renderer
             bool at(const unsigned int, const unsigned int) const;
             void set(const unsigned int, const unsigned int, const bool);
             int getRow(const unsigned int, const unsigned int) const;
+            void setRow(const unsigned int, const unsigned int, const unsigned char);
             void clear();
             int width() const { return pixelArray.at(0).size(); }
             int height() const { return pixelArray.size(); }
