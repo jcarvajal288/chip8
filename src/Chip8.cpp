@@ -5,6 +5,7 @@ using namespace std;
 // clears the Chip8's state
 void Chip8::reset()
 {
+    screen.clear();
     pc = 0x200;
     sp = 0;
     memory.fill(0);

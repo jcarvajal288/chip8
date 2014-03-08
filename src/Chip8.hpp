@@ -19,6 +19,8 @@ class Chip8
         void run();
 
     private:
+        Renderer::Screen screen;
+
         unsigned short pc; // program counter
         unsigned short sp; // stack pointer
         std::array<unsigned char, 4096> memory;

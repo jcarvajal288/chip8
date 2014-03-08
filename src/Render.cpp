@@ -25,6 +25,23 @@ namespace Renderer
         pixelArray.at(y).set(x, b);
     }
 
+    int Screen::getRow(const unsigned int x, const unsigned int y) const
+    {
+        // used only for the unit tests
+        // returns an integer representation of an 8 pixel long horizontal row
+        // of the screen.  Sprites are all 8 pixels wide.
+        int sum = 0;
+        sum += pixelArray.at(y).test(x) * 0x80;
+        sum += pixelArray.at(y).test(x+1) * 0x40;
+        sum += pixelArray.at(y).test(x+2) * 0x20;
+        sum += pixelArray.at(y).test(x+3) * 0x10;
+        sum += pixelArray.at(y).test(x+4) * 0x8;
+        sum += pixelArray.at(y).test(x+5) * 0x4;
+        sum += pixelArray.at(y).test(x+6) * 0x2;
+        sum += pixelArray.at(y).test(x+7) * 0x1;
+        return sum;
+    }
+
     void drawPixel(const int x, const int flipped_y)
     {
         // openGL puts the origin at the lower left, so we need to switch

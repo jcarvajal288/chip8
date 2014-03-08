@@ -31,15 +31,15 @@ DEBUG_OBJ = \
 	$(OBJDIR)/Chip8.dbg.o \
 	$(OBJDIR)/Render.dbg.o
 
-TEST_OBJ = \
+GTEST_OBJ = \
 	$(OBJDIR)/gtest-all.o \
 	$(OBJDIR)/gtest_main.o \
+
+TEST_OBJ = \
 	$(OBJDIR)/Chip8_unittest.o \
 	$(OBJDIR)/Render_unittest.o 
 
 TEST_DEBUG_OBJ = \
-	$(OBJDIR)/gtest-all.dbg.o \
-	$(OBJDIR)/gtest_main.dbg.o \
 	$(OBJDIR)/Chip8_unittest.dbg.o \
 	$(OBJDIR)/Render_unittest.dbg.o
 
@@ -51,11 +51,11 @@ chip8: $(OBJDIR)/chip8_main.o $(OBJ)
 debug: $(OBJDIR)/chip8_main.dbg.o $(DEBUG_OBJ)
 	$(CC) $(DEBUG_OBJ) $(OBJDIR)/chip8_main.dbg.o $(LFLAGS) -o $@
 
-test: $(OBJ) $(TEST_OBJ)
-	$(CC) $(OBJ) $(TEST_OBJ) $(LFLAGS) -o $@ -lpthread $(GTESTDIR)/lib/.libs/libgtest.a
+test: $(OBJ) $(GTEST_OBJ) $(TEST_OBJ)
+	$(CC) $(OBJ) $(GTEST_OBJ) $(TEST_OBJ) $(LFLAGS) -o $@ -lpthread $(GTESTDIR)/lib/.libs/libgtest.a
 
-test_debug: $(DEBUG_OBJ) $(TEST_DEBUG_OBJ)
-	$(CC) $(DEBUG_OBJ) $(TEST_DEBUG_OBJ) $(LFLAGS) -o $@ -lpthread $(GTESTDIR)/lib/.libs/libgtest.a
+test_debug: $(DEBUG_OBJ) $(GTEST_OBJ) $(TEST_DEBUG_OBJ)
+	$(CC) $(DEBUG_OBJ) $(GTEST_OBJ) $(TEST_DEBUG_OBJ) $(LFLAGS) -o $@ -lpthread $(GTESTDIR)/lib/.libs/libgtest.a
 
 clean:
-	\rm -f $(OBJDIR)/*.o
+	\rm -f $(OBJDIR)/Chip8_main.dbg.o $(OBJDIR)/Chip8_main.o $(OBJ) $(DEBUG_OBJ) $(TEST_OBJ) $(TEST_DEBUG_OBJ)

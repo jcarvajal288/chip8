@@ -38,3 +38,20 @@ TEST(RenderTest, SetPixel)
     screen.set(31, 16, false);
     EXPECT_FALSE(screen.at(31,16)) << "Coordinate (31,16) still set";
 }
+
+TEST(RenderTest, GetRow)
+{
+    Screen screen;
+    screen.clear();
+
+    screen.set(0, 0, true);
+    screen.set(1, 0, true);
+    screen.set(2, 0, true);
+    screen.set(3, 0, true);
+    screen.set(4, 0, false);
+    screen.set(5, 0, false);
+    screen.set(6, 0, false);
+    screen.set(7, 0, false);
+
+    EXPECT_EQ(screen.getRow(0,0), 0xF0) << "Sprite row not retrieved correctly";
+}
