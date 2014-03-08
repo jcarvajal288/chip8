@@ -369,9 +369,9 @@ bool Chip8::handle_D_codes(const unsigned short opcode)
     // onto the existing screen. If this causes any pixels to be erased, VF is set to 1, 
     // otherwise it is set to 0.  If the sprite is positioned so part of it is outside
     // the coordinates of the display, it wraps around to the opposite side of the screen.
-    const unsigned char x = (opcode & 0x0F00) / 0x100;
-    const unsigned char y = (opcode & 0x00F0) / 0x10;
-    const unsigned char n = opcode & 0xF;
+    //const unsigned char x = (opcode & 0x0F00) / 0x100;
+    //const unsigned char y = (opcode & 0x00F0) / 0x10;
+    //const unsigned char n = opcode & 0xF;
     return true;
 }
 
@@ -408,6 +408,13 @@ bool Chip8::handle_F_codes(const unsigned short opcode)
             //
             // The values of I and Vx are added, and the results are stored in I
             iReg += vReg.at(x);
+            break;
+        case 0x29:
+            // Set I = location of sprite for digit Vx.
+            //
+            // The value of I is set to the location for the hexidecimal sprite corresponding
+            // to the value of Vx.
+            iReg = vReg.at(x) * 5; // each sprite is 5 bytes long
             break;
         default:
             cerr << "Invalid 0xF opcode: " << hex << opcode << endl;

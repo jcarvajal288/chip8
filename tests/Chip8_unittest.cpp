@@ -478,3 +478,16 @@ TEST(Chip8Test, opcode_Fx1E)
         EXPECT_EQ(chip8.iReg, value + i)  << "V" << i << " not added to Vi";
     }
 }
+
+TEST(Chip8Test, opcode_Fx29)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    for(int i=0; i<=0xF; ++i)
+    {
+        chip8.vReg.at(0) = i;
+        EXPECT_TRUE(chip8.performOp(0xF029)) << "Opcode failed";
+        EXPECT_EQ(chip8.iReg, i * 5) << "wrong location in I for opcode " << hex << i;
+    }
+}
