@@ -20,6 +20,11 @@ namespace Renderer
         return pixelArray.at(y).test(x);
     }
 
+    void Screen::set(const unsigned int x, const unsigned int y, const bool b)
+    {
+        pixelArray.at(y).set(x, b);
+    }
+
     void drawPixel(const int x, const int flipped_y)
     {
         // openGL puts the origin at the lower left, so we need to switch

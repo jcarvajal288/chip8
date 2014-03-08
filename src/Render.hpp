@@ -13,6 +13,7 @@ namespace Renderer
             Screen() {}
 
             bool at(const unsigned int, const unsigned int) const;
+            void set(const unsigned int, const unsigned int, const bool);
             void clear();
             int width() const { return pixelArray.at(0).size(); }
             int height() const { return pixelArray.size(); }
