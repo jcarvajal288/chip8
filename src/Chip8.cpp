@@ -383,6 +383,7 @@ bool Chip8::handle_E_codes(const unsigned short opcode)
 bool Chip8::handle_F_codes(const unsigned short opcode)
 {
     const unsigned char x = (opcode & 0x0F00) / 0x100;
+    int val;
     switch(opcode & 0xFF) 
     {
         case 0x07:
@@ -415,6 +416,17 @@ bool Chip8::handle_F_codes(const unsigned short opcode)
             // The value of I is set to the location for the hexidecimal sprite corresponding
             // to the value of Vx.
             iReg = vReg.at(x) * 5; // each sprite is 5 bytes long
+            break;
+        case 0x33:
+            // Store BCD representation of Vx in memory locations I, I+1, and I+2.
+            //
+            // The interpreter takes the decimal value of Vx, and places the hundreds digit in
+            // memory at location I, the tens digit at location I+1, and the ones digit at 
+            // location I+2.
+            val = vReg.at(x);
+            memory.at(iReg) = val / 100;
+            memory.at(iReg+1) = (val / 10) % 10;
+            memory.at(iReg+2) = val % 10;
             break;
         default:
             cerr << "Invalid 0xF opcode: " << hex << opcode << endl;

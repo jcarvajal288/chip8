@@ -491,3 +491,18 @@ TEST(Chip8Test, opcode_Fx29)
         EXPECT_EQ(chip8.iReg, i * 5) << "wrong location in I for opcode " << hex << i;
     }
 }
+
+TEST(Chip8Test, opcode_Fx33)
+{
+    Chip8 chip8;
+    chip8.reset();
+
+    int addr = 0x200;
+    char val = 123;
+    chip8.vReg.at(0) = val;
+    chip8.iReg = addr;
+    EXPECT_TRUE(chip8.performOp(0xF033)) << "Opcode failed";
+    EXPECT_EQ(chip8.memory.at(addr), 1) << "Hundreds digit incorrect";
+    EXPECT_EQ(chip8.memory.at(addr+1), 2) << "Tens digit incorrect";
+    EXPECT_EQ(chip8.memory.at(addr+2), 3) << "Ones digit incorrect";
+}

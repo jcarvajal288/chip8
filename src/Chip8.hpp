@@ -24,7 +24,7 @@ class Chip8
         std::array<unsigned char, 4096> memory;
         std::array<unsigned short, 16> stack;
         std::array<unsigned char, 16> vReg; // "V" registers
-        unsigned char iReg; // 'I' register
+        unsigned short iReg; // 'I' register
         unsigned char delayTimer;
         unsigned char soundTimer;
 
