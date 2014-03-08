@@ -1,7 +1,25 @@
 #include <GL/freeglut.h>
 
+#include "Render.hpp"
+
+using namespace std;
+
 namespace Renderer
 {
+    void Screen::clear()
+    {
+        array< bitset<64>, 32 >::iterator it;
+        for(it=pixelArray.begin(); it!=pixelArray.end(); ++it)
+        {
+            it->reset();
+        }
+    }
+
+    bool Screen::at(const unsigned int x, const unsigned int y) const
+    {
+        return pixelArray.at(y).test(x);
+    }
+
     void drawPixel(const int x, const int flipped_y)
     {
         // openGL puts the origin at the lower left, so we need to switch

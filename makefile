@@ -34,12 +34,14 @@ DEBUG_OBJ = \
 TEST_OBJ = \
 	$(OBJDIR)/gtest-all.o \
 	$(OBJDIR)/gtest_main.o \
-	$(OBJDIR)/Chip8_unittest.o 
+	$(OBJDIR)/Chip8_unittest.o \
+	$(OBJDIR)/Render_unittest.o 
 
 TEST_DEBUG_OBJ = \
 	$(OBJDIR)/gtest-all.dbg.o \
 	$(OBJDIR)/gtest_main.dbg.o \
-	$(OBJDIR)/Chip8_unittest.dbg.o
+	$(OBJDIR)/Chip8_unittest.dbg.o \
+	$(OBJDIR)/Render_unittest.dbg.o
 
 all: chip8 debug test test_debug
 
