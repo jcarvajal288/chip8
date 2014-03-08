@@ -96,65 +96,49 @@ void Chip8::loadSprite(const long long sprite, int& addr)
     }
 }
 
-void Chip8::performOp(const unsigned short opcode)
+bool Chip8::performOp(const unsigned short opcode)
 {
     switch(opcode & 0xF000)
     {
         case 0x0000:
-            handle_0_codes(opcode);
-            break;
+            return handle_0_codes(opcode);
         case 0x1000:
-            handle_1_codes(opcode);
-            break;
+            return handle_1_codes(opcode);
         case 0x2000:
-            handle_2_codes(opcode);
-            break;
+            return handle_2_codes(opcode);
         case 0x3000:
-            handle_3_codes(opcode);
-            break;
+            return handle_3_codes(opcode);
         case 0x4000:
-            handle_4_codes(opcode);
-            break;
+            return handle_4_codes(opcode);
         case 0x5000:
-            handle_5_codes(opcode);
-            break;
+            return handle_5_codes(opcode);
         case 0x6000:
-            handle_6_codes(opcode);
-            break;
+            return handle_6_codes(opcode);
         case 0x7000:
-            handle_7_codes(opcode);
-            break;
+            return handle_7_codes(opcode);
         case 0x8000:
-            handle_8_codes(opcode);
-            break;
+            return handle_8_codes(opcode);
         case 0x9000:
-            handle_9_codes(opcode);
-            break;
+            return handle_9_codes(opcode);
         case 0xA000:
-            handle_A_codes(opcode);
-            break;
+            return handle_A_codes(opcode);
         case 0xB000:
-            handle_B_codes(opcode);
-            break;
+            return handle_B_codes(opcode);
         case 0xC000:
-            handle_C_codes(opcode);
-            break;
+            return handle_C_codes(opcode);
         case 0xD000:
-            handle_D_codes(opcode);
-            break;
+            return handle_D_codes(opcode);
         case 0xE000:
-            handle_E_codes(opcode);
-            break;
+            return handle_E_codes(opcode);
         case 0xF000:
-            handle_F_codes(opcode);
-            break;
+            return handle_F_codes(opcode);
         default:
             cout << "Invalid opcode: " << hex << opcode << endl;
-            exit(EXIT_FAILURE);
+            return false;
     }
 }
 
-void Chip8::handle_0_codes(const unsigned short opcode)
+bool Chip8::handle_0_codes(const unsigned short opcode)
 {
     switch(opcode)
     {
@@ -168,19 +152,21 @@ void Chip8::handle_0_codes(const unsigned short opcode)
             break;
         default:
             cerr << "Invalid 0x0NNN opcode: " << hex << opcode << endl;
-            exit(EXIT_FAILURE);
+            return false;
     }
+    return true;
 }
 
-void Chip8::handle_1_codes(const unsigned short opcode)
+bool Chip8::handle_1_codes(const unsigned short opcode)
 {
     // 1nnn - JP addr - Jump to location nnn
     //
     // Set the program counter to nnn
     pc = opcode & 0xFFF;
+    return true;
 }
 
-void Chip8::handle_2_codes(const unsigned short opcode)
+bool Chip8::handle_2_codes(const unsigned short opcode)
 {
     // 2nnn - CALL addr - Call subroutine at nnn
     //
@@ -189,9 +175,10 @@ void Chip8::handle_2_codes(const unsigned short opcode)
     sp++;
     stack.at(sp) = pc;
     pc = opcode & 0xFFF; 
+    return true;
 }
 
-void Chip8::handle_3_codes(const unsigned short opcode)
+bool Chip8::handle_3_codes(const unsigned short opcode)
 {
     // 3xkk - SE Vx, byte - Skip next instruction if Vx - kk.
     //
@@ -203,9 +190,10 @@ void Chip8::handle_3_codes(const unsigned short opcode)
     {
         pc += 2;
     }
+    return true;
 }
 
-void Chip8::handle_4_codes(const unsigned short opcode)
+bool Chip8::handle_4_codes(const unsigned short opcode)
 {
     // 4xkk - SNE Vx, byte - Skip next instruction if Vx != kk.
     //
@@ -217,9 +205,10 @@ void Chip8::handle_4_codes(const unsigned short opcode)
     {
         pc += 2;
     }
+    return true;
 }
 
-void Chip8::handle_5_codes(const unsigned short opcode)
+bool Chip8::handle_5_codes(const unsigned short opcode)
 {
     // 5xy0 - SE Vx, Vy - Skip next instruction if Vx == Vy.
     //
@@ -231,9 +220,10 @@ void Chip8::handle_5_codes(const unsigned short opcode)
     {
         pc += 2;
     }
+    return true;
 }
 
-void Chip8::handle_6_codes(const unsigned short opcode)
+bool Chip8::handle_6_codes(const unsigned short opcode)
 {
     // 6xkk - LD Vx, byte - Set Vx == kk.
     //
@@ -241,9 +231,10 @@ void Chip8::handle_6_codes(const unsigned short opcode)
     const unsigned char x = (opcode & 0x0F00) / 0x100;
     const unsigned char kk = opcode & 0xFF;
     vReg.at(x) = kk;
+    return true;
 }
 
-void Chip8::handle_7_codes(const unsigned short opcode)
+bool Chip8::handle_7_codes(const unsigned short opcode)
 {
     // 7xkk - ADD Vx, byte - Set Vx = Vx + kk.
     //
@@ -251,9 +242,10 @@ void Chip8::handle_7_codes(const unsigned short opcode)
     const unsigned char x = (opcode & 0x0F00) / 0x100;
     const unsigned char kk = opcode & 0xFF;
     vReg.at(x) = vReg.at(x) + kk;
+    return true;
 }
 
-void Chip8::handle_8_codes(const unsigned short opcode)
+bool Chip8::handle_8_codes(const unsigned short opcode)
 {
     // all 0x8 opcodes use the middle two nibbles to store register IDs
     const unsigned char x = (opcode & 0x0F00) / 0x100;
@@ -314,11 +306,12 @@ void Chip8::handle_8_codes(const unsigned short opcode)
             break;
         default:
             cerr << "Invalid 0x8 opcode: " << hex << opcode << endl;
-            exit(EXIT_FAILURE);
+            return false;
     }
+    return true;
 }
 
-void Chip8::handle_9_codes(const unsigned short opcode)
+bool Chip8::handle_9_codes(const unsigned short opcode)
 {
     // 9xy0 - SNE Vx, Vy - Skip next instruction if Vx != Vy.
     //
@@ -329,27 +322,30 @@ void Chip8::handle_9_codes(const unsigned short opcode)
     {
         pc += 2;
     }
+    return true;
 }
 
-void Chip8::handle_A_codes(const unsigned short opcode)
+bool Chip8::handle_A_codes(const unsigned short opcode)
 {
     // Annn - LD I, addr - Set I = nnn.
     //
     // The value of register I is set to nnn.
     const unsigned char nnn = opcode & 0xFFF;
     iReg = nnn;
+    return true;
 }
 
-void Chip8::handle_B_codes(const unsigned short opcode)
+bool Chip8::handle_B_codes(const unsigned short opcode)
 {
     // Bnnn - JP V0, addr - Jump to location nnn + V0.
     //
     // The program counter is set to nnn plus the value of V0.
     const unsigned char nnn = opcode & 0xFFF;
     pc = vReg.at(0x0) + nnn;
+    return true;
 }
 
-void Chip8::handle_C_codes(const unsigned short opcode)
+bool Chip8::handle_C_codes(const unsigned short opcode)
 {
     // Cxkk - RND Vx, byte - Set Vx = random byte AND kk.
     //
@@ -359,9 +355,10 @@ void Chip8::handle_C_codes(const unsigned short opcode)
     const unsigned char kk = opcode & 0xFF;
     const unsigned char randomByte = rand() % 255;
     vReg.at(x) = randomByte & kk;
+    return true;
 }
 
-void Chip8::handle_D_codes(const unsigned short opcode)
+bool Chip8::handle_D_codes(const unsigned short opcode)
 {
     // Dxyn - DRW Vx, Vy, nibble
     // Display n-byte sprite starting at memory location I at (Vx, Vy),
@@ -375,14 +372,46 @@ void Chip8::handle_D_codes(const unsigned short opcode)
     const unsigned char x = (opcode & 0x0F00) / 0x100;
     const unsigned char y = (opcode & 0x00F0) / 0x10;
     const unsigned char n = opcode & 0xF;
+    return true;
 }
 
-void Chip8::handle_E_codes(const unsigned short opcode)
+bool Chip8::handle_E_codes(const unsigned short opcode)
 {
-
+    return true;
 }
 
-void Chip8::handle_F_codes(const unsigned short opcode)
+bool Chip8::handle_F_codes(const unsigned short opcode)
 {
-
+    const unsigned char x = (opcode & 0x0F00) / 0x100;
+    switch(opcode & 0xFF) 
+    {
+        case 0x07:
+            // LD Vx, DT - Set Vx = delay timer value.
+            //
+            // The value of DT is placed into Vx.
+            vReg.at(x) = delayTimer;
+            break;
+        case 0x15:
+            // LD DT, Vx - Set delay timer = Vx.
+            //
+            // DT is set equal to the value of Vx.
+            delayTimer = vReg.at(x);
+            break;
+        case 0x18:
+            // LD ST, Vx - Set sound timer = Vx.
+            //
+            // ST is set equal to the value of Vx.
+            soundTimer = vReg.at(x);
+            break;
+        case 0x1E:
+            // ADD I, Vx - Set I = I + Vx.
+            //
+            // The values of I and Vx are added, and the results are stored in I
+            iReg += vReg.at(x);
+            break;
+        default:
+            cerr << "Invalid 0xF opcode: " << hex << opcode << endl;
+            return false;
+    }
+    return true;
 }
