@@ -7,8 +7,8 @@ class KeyPad
 {
     public:
         void reset();
-        bool isKeyPressed(const char) const;
-        void setKey(const char, const bool);
+        bool isKeyPressed(const unsigned char) const;
+        void setKey(const unsigned char, const bool);
 
         static KeyPad* instance();
 
@@ -17,5 +17,7 @@ class KeyPad
         std::bitset<16> keys;
 
         KeyPad() {}
-        //std::map<unsigned char, unsigned char> keyMap;
 };
+
+void keyDown(unsigned char, int, int);
+void keyUp(unsigned char, int, int);
