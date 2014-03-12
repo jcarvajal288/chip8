@@ -25,11 +25,13 @@ $(OBJDIR)/%.dbg.o : $(TESTDIR)/%.cpp
 
 OBJ = \
 	$(OBJDIR)/Chip8.o \
-	$(OBJDIR)/Render.o
+	$(OBJDIR)/Render.o \
+	$(OBJDIR)/KeyPad.o
 
 DEBUG_OBJ = \
 	$(OBJDIR)/Chip8.dbg.o \
-	$(OBJDIR)/Render.dbg.o
+	$(OBJDIR)/Render.dbg.o \
+	$(OBJDIR)/KeyPad.dbg.o
 
 GTEST_OBJ = \
 	$(OBJDIR)/gtest-all.o \
@@ -37,11 +39,13 @@ GTEST_OBJ = \
 
 TEST_OBJ = \
 	$(OBJDIR)/Chip8_unittest.o \
-	$(OBJDIR)/Render_unittest.o 
+	$(OBJDIR)/Render_unittest.o \
+	$(OBJDIR)/KeyPad_unittest.o 
 
 TEST_DEBUG_OBJ = \
 	$(OBJDIR)/Chip8_unittest.dbg.o \
-	$(OBJDIR)/Render_unittest.dbg.o
+	$(OBJDIR)/Render_unittest.dbg.o \
+	$(OBJDIR)/KeyPad_unittest.dbg.o
 
 all: chip8 debug test test_debug
 
