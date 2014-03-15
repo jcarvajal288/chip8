@@ -6,7 +6,7 @@ KeyPad* KeyPad::_instance = 0;
 
 void KeyPad::reset()
 {
-    keys.none();
+    keys.reset();
 }
 
 bool KeyPad::isKeyPressed(const unsigned char ch) const

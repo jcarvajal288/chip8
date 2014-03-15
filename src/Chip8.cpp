@@ -15,6 +15,8 @@ void Chip8::reset()
     delayTimer = 0;
     soundTimer = 0;
 
+    KeyPad::instance()->reset();
+
     loadBuiltinSprites();
 }
 
@@ -389,6 +391,21 @@ bool Chip8::handle_D_codes(const unsigned short opcode)
 
 bool Chip8::handle_E_codes(const unsigned short opcode)
 {
+    const unsigned char x = (opcode & 0x0F00) / 0x100;
+    switch(opcode & 0xFF)
+    {
+        case 0x9E:
+            // SKP Vx - Skip next instruction if key with the value of Vx is pressed.
+            //
+            // Checks the keyboard, and if the key corresponding to the value of Vx is currently
+            // in the down position, PC is increased by 2.
+            if(KeyPad::instance()->isKeyPressed(x))
+                pc += 2;
+            break;
+        default:
+            cerr << "Invalid 0xE opcode: " << hex << opcode << endl;
+            return false;
+    }
     return true;
 }
 

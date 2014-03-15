@@ -5,7 +5,25 @@ using namespace std;
 
 TEST(KeyPadTest, Reset)
 {
+    KeyPad::instance()->setKey(0x0, true);
+    KeyPad::instance()->setKey(0x1, true);
+    KeyPad::instance()->setKey(0x2, true);
+    KeyPad::instance()->setKey(0x3, true);
+    KeyPad::instance()->setKey(0x4, true);
+    KeyPad::instance()->setKey(0x5, true);
+    KeyPad::instance()->setKey(0x6, true);
+    KeyPad::instance()->setKey(0x7, true);
+    KeyPad::instance()->setKey(0x8, true);
+    KeyPad::instance()->setKey(0x9, true);
+    KeyPad::instance()->setKey(0xa, true);
+    KeyPad::instance()->setKey(0xb, true);
+    KeyPad::instance()->setKey(0xc, true);
+    KeyPad::instance()->setKey(0xd, true);
+    KeyPad::instance()->setKey(0xe, true);
+    KeyPad::instance()->setKey(0xf, true);
+
     KeyPad::instance()->reset();
+
     EXPECT_EQ(KeyPad::instance()->isKeyPressed(0x0), false) << "Key 0 pressed after reset.";
     EXPECT_EQ(KeyPad::instance()->isKeyPressed(0x1), false) << "Key 1 pressed after reset.";
     EXPECT_EQ(KeyPad::instance()->isKeyPressed(0x2), false) << "Key 2 pressed after reset.";

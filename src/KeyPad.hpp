@@ -1,3 +1,6 @@
+#ifndef KEYPAD_HPP
+#define KEYPAD_HPP
+
 #include <bitset>
 #include <fstream>
 #include <iostream>
@@ -21,3 +24,5 @@ class KeyPad
 
 void keyDown(unsigned char, int, int);
 void keyUp(unsigned char, int, int);
+
+#endif

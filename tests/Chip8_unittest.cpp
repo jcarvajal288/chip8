@@ -3,6 +3,7 @@
 #define private public 
 
 #include "Chip8.hpp"
+#include "KeyPad.hpp"
 #include "gtest/gtest.h"
 
 using namespace std;
@@ -640,6 +641,24 @@ TEST(Chip8Test, opcode_Dxyn_wrapVertical)
     EXPECT_EQ(chip8.screen.getRow(0, 1), 0xF0) << "Incorrect blitting at row (0,1)";
 }
 
+TEST(Chip8Test, opcode_Ex9E)
+{
+    Chip8 chip8;
+    chip8.reset();
+    
+    int opcode;
+    int initialPC = chip8.pc;
+    for(int i=0x0; i<=0xF; ++i)
+    {
+        opcode = 0xE09E + (i * 0x100);
+        chip8.performOp(opcode);
+        EXPECT_EQ(chip8.pc, initialPC) << "PC incremented for unpressed key " << hex << i;
+        KeyPad::instance()->setKey(i, true);
+        chip8.performOp(opcode);
+        EXPECT_EQ(chip8.pc, initialPC + 2) << "PC not incremented for pressed key " << hex << i;
+        initialPC += 2;
+    }
+}
 
 TEST(Chip8Test, opcode_Fx07)
 {

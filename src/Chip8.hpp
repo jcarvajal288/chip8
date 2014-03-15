@@ -1,11 +1,15 @@
 /*
  * Chip8 reference at devernay.free.fr/hacks/chip8/C8TECH10.HTM
  */
+#ifndef CHIP8_HPP
+#define CHIP8_HPP
+
 #include <array>
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
 
+#include "KeyPad.hpp"
 #include "Render.hpp"
 
 class Chip8
@@ -50,3 +54,5 @@ class Chip8
         bool handle_E_codes(const unsigned short);
         bool handle_F_codes(const unsigned short);
 };
+
+#endif
