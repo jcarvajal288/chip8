@@ -660,6 +660,25 @@ TEST(Chip8Test, opcode_Ex9E)
     }
 }
 
+TEST(Chip8Test, opcode_ExA1)
+{
+    Chip8 chip8;
+    chip8.reset();
+    
+    int opcode;
+    int initialPC = chip8.pc;
+    for(int i=0x0; i<=0xF; ++i)
+    {
+        opcode = 0xE0A1 + (i * 0x100);
+        chip8.performOp(opcode);
+        EXPECT_EQ(chip8.pc, initialPC + 2) << "PC incremented for pressed key " << hex << i;
+        initialPC += 2;
+        KeyPad::instance()->setKey(i, true);
+        chip8.performOp(opcode);
+        EXPECT_EQ(chip8.pc, initialPC) << "PC not incremented for unpressed key " << hex << i;
+    }
+}
+
 TEST(Chip8Test, opcode_Fx07)
 {
     Chip8 chip8;

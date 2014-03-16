@@ -402,6 +402,14 @@ bool Chip8::handle_E_codes(const unsigned short opcode)
             if(KeyPad::instance()->isKeyPressed(x))
                 pc += 2;
             break;
+        case 0xA1:
+            // SKP Vx - Skip next instruction if key with the value of Vx is not pressed.
+            //
+            // Checks the keyboard, and if the key corresponding to the value of Vx is currently
+            // in the up position, PC is increased by 2.
+            if(!KeyPad::instance()->isKeyPressed(x))
+                pc += 2;
+            break;
         default:
             cerr << "Invalid 0xE opcode: " << hex << opcode << endl;
             return false;
