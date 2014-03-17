@@ -51,20 +51,30 @@ bool Chip8::load(const string& program)
     return true;
 }
 
-void Chip8::run()
+bool Chip8::run()
 {
+    clock_t time = clock();
     unsigned short opcode;
+    bool success = true;
     do
     {
         // read next opcode. each opcode is two bytes long, so load two memory locations at once
         opcode = memory.at(pc) << 8 | memory.at(pc + 1);
 
-        performOp(opcode);
+        success = performOp(opcode);
+        if(!success)
+        {
+            return false;
+        }
+
+        updateTimers(time);
 
         // increment program counter to point to next opcode
         pc += 2; 
     }
     while(opcode != 0);
+
+    return true;
 }
 
 // loads the hex character sprites into chip8 memory
@@ -97,6 +107,16 @@ void Chip8::loadSprite(const long long sprite, int& addr)
     {
         memory.at(addr++) = (sprite >> (8*i)) & 0xFF;
     }
+}
+
+void Chip8::updateTimers(clock_t& oldTime)
+{
+    // the timers are decremented once every 60th of a second
+    clock_t newTime = clock();
+    unsigned char numTicks = (newTime - oldTime) / (CLOCKS_PER_SEC / 60);
+    delayTimer -= numTicks;
+    soundTimer -= numTicks;
+    oldTime = newTime;
 }
 
 bool Chip8::performOp(const unsigned short opcode)
@@ -420,6 +440,7 @@ bool Chip8::handle_E_codes(const unsigned short opcode)
 bool Chip8::handle_F_codes(const unsigned short opcode)
 {
     const unsigned char x = (opcode & 0x0F00) / 0x100;
+    unsigned char key;
     int val;
     switch(opcode & 0xFF) 
     {
@@ -428,6 +449,14 @@ bool Chip8::handle_F_codes(const unsigned short opcode)
             //
             // The value of DT is placed into Vx.
             vReg.at(x) = delayTimer;
+            break;
+        case 0x0A:
+            // LD Vx, K - Wait for a key press, store the value of the key in Vx.
+            //
+            // All execution stops until a key is pressed, then the value of that key is
+            // stored in Vx.
+            key = KeyPad::instance()->waitForKeypress();
+            vReg.at(x) = key;
             break;
         case 0x15:
             // LD DT, Vx - Set delay timer = Vx.

@@ -763,3 +763,15 @@ TEST(Chip8Test, opcode_Fx33)
     EXPECT_EQ(chip8.memory.at(addr+1), 2) << "Tens digit incorrect";
     EXPECT_EQ(chip8.memory.at(addr+2), 3) << "Ones digit incorrect";
 }
+
+TEST(Chip8Test, loadAndRun)
+{
+    Chip8 chip8;
+    chip8.reset();
+    srand(time(NULL));
+    bool loadSuccessful = chip8.load("./games/MAZE");
+    ASSERT_TRUE(loadSuccessful) << "Load failed.  Aborting";
+    bool runSuccessful = chip8.run();
+    ASSERT_TRUE(runSuccessful) << "Run failed.";
+    chip8.run();
+}

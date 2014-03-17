@@ -5,6 +5,7 @@
 #define CHIP8_HPP
 
 #include <array>
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
@@ -19,7 +20,7 @@ class Chip8
 
         void reset();
         bool load(const std::string&);
-        void run();
+        bool run();
 
     private:
         Renderer::Screen screen;
@@ -35,6 +36,8 @@ class Chip8
 
         void loadBuiltinSprites();
         void loadSprite(const long long, int&);
+
+        void updateTimers(clock_t&);
 
         bool performOp(const unsigned short);
         bool handle_0_codes(const unsigned short);

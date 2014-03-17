@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Chip8.hpp"
+#include "KeyPad.hpp"
 #include "Render.hpp"
 
 using namespace std;
@@ -25,5 +26,7 @@ int main(int argc, char **argv)
 {
     Renderer::init(argc, argv);
     glutDisplayFunc(start);
+    glutKeyboardFunc(keyDown);
+    glutKeyboardUpFunc(keyUp);
     glutMainLoop();
 }

@@ -12,6 +12,7 @@ class KeyPad
         void reset();
         bool isKeyPressed(const unsigned char) const;
         void setKey(const unsigned char, const bool);
+        unsigned char waitForKeypress();
 
         static KeyPad* instance();
 

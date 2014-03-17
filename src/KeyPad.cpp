@@ -19,6 +19,18 @@ void KeyPad::setKey(const unsigned char ch, const bool b)
     keys.set(ch, b);
 }
 
+unsigned char KeyPad::waitForKeypress()
+{
+    while(keys.none()) {}
+
+    // a key has now been pressed, so find it and return its hex value
+    for(char i=0x0; i<=0xF; ++i)
+    {
+        if(keys.test(i))
+            return i;
+    }
+}
+
 // Implements Singleton design pattern
 KeyPad* KeyPad::instance()
 {
