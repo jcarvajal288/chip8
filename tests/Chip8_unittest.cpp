@@ -545,8 +545,8 @@ TEST(Chip8Test, opcode_Annn)
     EXPECT_TRUE(chip8.performOp(0xA045)) << "Opcode failed";
     EXPECT_EQ(chip8.iReg, 0x45) << "I register not set correctly";
 
-    EXPECT_TRUE(chip8.performOp(0xA123)) << "Opcode failed";
-    EXPECT_EQ(chip8.iReg, 0x23) << "I register not set correctly after overflow";
+    EXPECT_TRUE(chip8.performOp(0xA222)) << "Opcode failed";
+    EXPECT_EQ(chip8.iReg, 0x222) << "I register not set correctly for three digit number";
 }
 
 TEST(Chip8Test, opcode_Bnnn)

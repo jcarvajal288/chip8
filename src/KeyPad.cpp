@@ -29,6 +29,8 @@ unsigned char KeyPad::waitForKeypress()
         if(keys.test(i))
             return i;
     }
+
+    return 0x10;
 }
 
 // Implements Singleton design pattern

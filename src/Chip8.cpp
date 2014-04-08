@@ -353,7 +353,7 @@ bool Chip8::handle_A_codes(const unsigned short opcode)
     // Annn - LD I, addr - Set I = nnn.
     //
     // The value of register I is set to nnn.
-    const unsigned char nnn = opcode & 0xFFF;
+    const unsigned short nnn = opcode & 0xFFF;
     iReg = nnn;
     return true;
 }
