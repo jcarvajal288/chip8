@@ -764,6 +764,7 @@ TEST(Chip8Test, opcode_Fx33)
     EXPECT_EQ(chip8.memory.at(addr+2), 3) << "Ones digit incorrect";
 }
 
+/*
 TEST(Chip8Test, loadAndRun)
 {
     Chip8 chip8;
@@ -775,3 +776,4 @@ TEST(Chip8Test, loadAndRun)
     ASSERT_TRUE(runSuccessful) << "Run failed.";
     chip8.run();
 }
+*/
