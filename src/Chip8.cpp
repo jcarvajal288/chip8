@@ -186,6 +186,7 @@ bool Chip8::handle_1_codes(const unsigned short opcode)
     //
     // Set the program counter to nnn
     pc = opcode & 0xFFF;
+    pc -= 2; // account for the automatic increment of the program counter after every opcode
     return true;
 }
 
@@ -203,7 +204,7 @@ bool Chip8::handle_2_codes(const unsigned short opcode)
 
 bool Chip8::handle_3_codes(const unsigned short opcode)
 {
-    // 3xkk - SE Vx, byte - Skip next instruction if Vx - kk.
+    // 3xkk - SE Vx, byte - Skip next instruction if Vx = kk.
     //
     // Compare register Vx to kk, and if they are equal, increment the 
     // program counter by 2.

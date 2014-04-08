@@ -227,7 +227,7 @@ TEST(Chip8Test, opcode_1NNN)
     Chip8 chip8;
     chip8.reset();
     EXPECT_TRUE(chip8.performOp(0x1234)) << "Opcode failed";
-    EXPECT_EQ(chip8.pc, 0x234) << "Program counter was not set to the correct address";
+    EXPECT_EQ(chip8.pc, 0x232) << "Program counter was not set to the correct address";
 }
 
 TEST(Chip8Test, opcode_2NNN)
