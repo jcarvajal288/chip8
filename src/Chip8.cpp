@@ -68,6 +68,7 @@ bool Chip8::run()
         }
 
         updateTimers(time);
+        screen.refresh();
 
         // increment program counter to point to next opcode
         pc += 2; 

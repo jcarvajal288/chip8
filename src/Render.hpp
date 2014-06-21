@@ -3,6 +3,7 @@
 
 #include <array>
 #include <bitset>
+#include <iostream>
 #include <GL/freeglut.h>
 
 namespace Renderer
@@ -18,6 +19,7 @@ namespace Renderer
             int getRow(const unsigned int, const unsigned int) const;
             void setRow(const unsigned int, const unsigned int, const unsigned char);
             void clear();
+            void refresh();
             int width() const { return pixelArray.at(0).size(); }
             int height() const { return pixelArray.size(); }
 

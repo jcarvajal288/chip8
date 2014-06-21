@@ -8,11 +8,27 @@ namespace Renderer
 {
     void Screen::clear()
     {
+        clearScreen();
         array< bitset<64>, 32 >::iterator it;
         for(it=pixelArray.begin(); it!=pixelArray.end(); ++it)
         {
             it->reset();
         }
+    }
+
+    void Screen::refresh()
+    {
+        for(int x=0; x<width(); ++x)
+        {
+            for(int y=0; y<height(); ++y)
+            {
+                if(at(x,y))
+                {
+                    drawPixel(x,y);
+                }
+            }
+        }
+        glFlush();
     }
 
     bool Screen::at(const unsigned int x, const unsigned int y) const
