@@ -496,6 +496,24 @@ bool Chip8::handle_F_codes(const unsigned short opcode)
             memory.at(iReg+1) = (val / 10) % 10;
             memory.at(iReg+2) = val % 10;
             break;
+        case 0x55:
+            // LD [I], Vx
+            //
+            // Store registers V0 through Vx in memory starting at location I
+            for(int i=0; i<=x; ++i)
+            {
+                memory.at(iReg+i) = vReg.at(i);
+            }
+            break;
+        case 0x65:
+            // LD Vx, [I]
+            //
+            // Read registers V0 through Vx from memory starting at location I.
+            for(int i=0; i<=x; ++i)
+            {
+                vReg.at(i) = memory.at(iReg+i);
+            }
+            break;
         default:
             cerr << "Invalid 0xF opcode: " << hex << opcode << endl;
             return false;

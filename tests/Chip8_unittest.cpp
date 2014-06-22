@@ -764,16 +764,36 @@ TEST(Chip8Test, opcode_Fx33)
     EXPECT_EQ(chip8.memory.at(addr+2), 3) << "Ones digit incorrect";
 }
 
-/*
-TEST(Chip8Test, loadAndRun)
+TEST(Chip8Test, opcode_Fx55)
 {
     Chip8 chip8;
     chip8.reset();
-    srand(time(NULL));
-    bool loadSuccessful = chip8.load("./games/MAZE");
-    ASSERT_TRUE(loadSuccessful) << "Load failed.  Aborting";
-    bool runSuccessful = chip8.run();
-    ASSERT_TRUE(runSuccessful) << "Run failed.";
-    chip8.run();
+    int addr = 0x200;
+    chip8.iReg = addr;
+    for(int i=0; i<=0xF; ++i)
+    {
+        chip8.vReg.at(i) = i;
+    }
+    EXPECT_TRUE(chip8.performOp(0xFF55)) << "Opcode failed";
+    for(int i=0; i<=0xF; ++i)
+    {
+        EXPECT_EQ(chip8.memory.at(addr + i), i) << "wrong value at memory location I + " << hex << i;
+    }
 }
-*/
+
+TEST(Chip8Test, opcode_Fx65)
+{
+    Chip8 chip8;
+    chip8.reset();
+    int addr = 0x200;
+    chip8.iReg = addr;
+    for(int i=0; i<=0xF; ++i)
+    {
+        chip8.memory.at(addr + i) = i;
+    }
+    EXPECT_TRUE(chip8.performOp(0xFF65)) << "Opcode failed";
+    for(int i=0; i<=0xF; ++i)
+    {
+        EXPECT_EQ(chip8.vReg.at(i), i) << "wrong value in register I + " << hex << i;
+    }
+}
