@@ -7,7 +7,7 @@ CDEBUGFLAGS = $(CFLAGS) -g -O0
 GTESTDIR = /usr/gtest-1.7.0
 TESTDEBUGFLAGS = $(TESTFLAGS) 
 CC = clang++
-LFLAGS = -lglut -lGLU
+LFLAGS = -lglut -lGLU -lGL
 TESTFLAGS = -I$(GTESTDIR) -I$(GTESTDIR)/include 
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.cpp

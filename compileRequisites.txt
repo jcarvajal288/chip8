@@ -1,0 +1,3 @@
+freeglut-devel
+gcc-c++ 
+compat-gcc-34
