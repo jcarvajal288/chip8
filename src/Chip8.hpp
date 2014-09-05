@@ -10,10 +10,13 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <boost/timer/timer.hpp>
+#include <boost/chrono/chrono_io.hpp>
 
 #include "KeyPad.hpp"
 #include "Render.hpp"
+
+typedef boost::chrono::steady_clock Clock;
+typedef boost::chrono::duration<long long, boost::micro> Microseconds;
 
 class Chip8
 {
@@ -35,12 +38,11 @@ class Chip8
         unsigned short iReg; // 'I' register
         unsigned char delayTimer;
         unsigned char soundTimer;
-        boost::timer::cpu_timer timer;
 
         void loadBuiltinSprites();
         void loadSprite(const long long, int&);
 
-        void updateTimers(double&);
+        Clock::time_point updateTimers(Clock::time_point);
 
         bool performOp(const unsigned short);
         bool handle_0_codes(const unsigned short);
