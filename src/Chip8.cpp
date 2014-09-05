@@ -53,7 +53,7 @@ bool Chip8::load(const string& program)
 
 bool Chip8::run()
 {
-    clock_t time = clock();
+    double time = timer.elapsed().system;
     unsigned short opcode;
     bool success = true;
     do
@@ -110,14 +110,18 @@ void Chip8::loadSprite(const long long sprite, int& addr)
     }
 }
 
-void Chip8::updateTimers(clock_t& oldTime)
+void Chip8::updateTimers(double& oldTime)
 {
     // the timers are decremented once every 60th of a second
-    clock_t newTime = clock();
-    unsigned char numTicks = (newTime - oldTime) / (CLOCKS_PER_SEC / 60);
+    double newTime = timer.elapsed().system;
+    unsigned char numTicks = (newTime - oldTime) / 16666667;
     delayTimer -= numTicks;
     soundTimer -= numTicks;
+    cout << delayTimer << endl;
     oldTime = newTime;
+
+//    clock_t newTime = clock();
+//    unsigned char numTicks = (newTime - oldTime) / (CLOCKS_PER_SEC / 60);
 }
 
 bool Chip8::performOp(const unsigned short opcode)

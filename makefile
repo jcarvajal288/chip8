@@ -8,7 +8,7 @@ CDEBUGFLAGS = $(CFLAGS) -g -O0
 GTESTDIR = /usr/gtest-1.7.0
 TESTDEBUGFLAGS = $(TESTFLAGS) 
 CC = clang++
-LFLAGS = -lglut -lGLU -lGL -L$(BOOSTDIR)/stage/lib/ -lboost_timer
+LFLAGS = -lglut -lGLU -lGL -L$(BOOSTDIR)/stage/lib/ -lboost_timer -lboost_chrono -lboost_system
 TESTFLAGS = -I$(GTESTDIR) -I$(GTESTDIR)/include 
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.cpp

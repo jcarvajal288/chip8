@@ -10,6 +10,8 @@
 #include <iostream>
 #include <stdlib.h>
 
+#include <boost/timer/timer.hpp>
+
 #include "KeyPad.hpp"
 #include "Render.hpp"
 
@@ -33,11 +35,12 @@ class Chip8
         unsigned short iReg; // 'I' register
         unsigned char delayTimer;
         unsigned char soundTimer;
+        boost::timer::cpu_timer timer;
 
         void loadBuiltinSprites();
         void loadSprite(const long long, int&);
 
-        void updateTimers(clock_t&);
+        void updateTimers(double&);
 
         bool performOp(const unsigned short);
         bool handle_0_codes(const unsigned short);
