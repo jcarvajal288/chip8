@@ -2,12 +2,13 @@ SRCDIR = ./src
 OBJDIR = ./obj
 TESTDIR = ./tests
 TESTOBJDIR = ./testobj
-CFLAGS = -Wall -std=c++11 -I$(SRCDIR)
+BOOSTDIR = /usr/include/boost_1_56_0
+CFLAGS = -Wall -std=c++11 -I$(SRCDIR) -I$(BOOSTDIR)
 CDEBUGFLAGS = $(CFLAGS) -g -O0
 GTESTDIR = /usr/gtest-1.7.0
 TESTDEBUGFLAGS = $(TESTFLAGS) 
 CC = clang++
-LFLAGS = -lglut -lGLU -lGL
+LFLAGS = -lglut -lGLU -lGL -L$(BOOSTDIR)/stage/lib/ -lboost_timer
 TESTFLAGS = -I$(GTESTDIR) -I$(GTESTDIR)/include 
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
